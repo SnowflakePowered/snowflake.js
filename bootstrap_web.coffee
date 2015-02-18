@@ -1,3 +1,3 @@
-$ = require './bower_components/reqwest/reqwest.js'
+{SnowflakeApi} = require './snowflake'
 
-window.$ = $
+window.snowflake = new SnowflakeApi "https://cors-test.appspot.com/test"
