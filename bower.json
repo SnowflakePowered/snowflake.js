@@ -22,8 +22,6 @@
   ],
   "dependencies": {
     "jquery": "~2.1.3",
-    "reqwest": "~1.1.5",
-    "cajon": "~0.2.6",
-    "requirejs": "~2.1.16"
+    "reqwest": "~1.1.5"
   }
 }

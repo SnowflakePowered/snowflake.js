@@ -1,0 +1,27 @@
+{
+  "name": "snowflake.js",
+  "version": "0.1.0",
+  "description": "Snowflake StandardAjax API Bindings",
+  "main": "snowflake.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SnowflakePowered/snowflake.js.git"
+  },
+  "keywords": [
+    "Snowflake",
+    "Emulator",
+    "Frontend"
+  ],
+  "author": "Ronny Chan <ronny6993@gmail.com>",
+  "license": "Apache 2",
+  "bugs": {
+    "url": "https://github.com/SnowflakePowered/snowflake.js/issues"
+  },
+  "homepage": "https://github.com/SnowflakePowered/snowflake.js",
+  "dependencies": {
+    "mr": "^0.15.7"
+  }
+}
