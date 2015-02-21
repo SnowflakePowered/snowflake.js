@@ -1,13 +1,17 @@
-﻿var SnowflakeApi, reqwest;
+﻿var SnowflakeEndpoint, reqwest;
 
-reqwest = require('./bower_components/reqwest/reqwest');
+reqwest = require('./node_modules/reqwest/reqwest');
 
-SnowflakeApi = (function() {
+exports.SnowflakeEndpoint = SnowflakeEndpoint = (function() {
   var handleWebSocketApiCall, websocketcallbacks;
 
-  function SnowflakeApi(apiUrl, transport) {
+  function SnowflakeEndpoint(apiUrl) {
     this.apiUrl = apiUrl;
-    this.transport = transport != null ? transport : "websocket";
+    if (this.apiUrl.startsWith("ws")) {
+      this.transport = "websocket";
+    } else {
+      this.transport = "ajax";
+    }
     if (this.transport === "websocket") {
       this.socket = new WebSocket(this.apiUrl);
       this.socket.onmessage = handleWebSocketApiCall;
@@ -25,7 +29,7 @@ SnowflakeApi = (function() {
     return callback.resolve(response);
   };
 
-  SnowflakeApi.prototype.webSocketApiCall = function(method, namespace, params) {
+  SnowflakeEndpoint.prototype.webSocketApiCall = function(method, namespace, params) {
     var promise, request;
     request = {
       "method": method,
@@ -40,36 +44,18 @@ SnowflakeApi = (function() {
     });
   };
 
-  SnowflakeApi.prototype.ajaxApiCall = function(method, namespace, params) {
-    var getparams, key, request;
-    getparams = (function() {
-      var _i, _len, _ref, _results;
-      _ref = Object.keys(params);
-      _results = [];
-      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-        key = _ref[_i];
-        _results.push({
-          name: key,
-          value: params[key]
-        });
-      }
-      return _results;
-    })();
+  SnowflakeEndpoint.prototype.ajaxApiCall = function(method, namespace, params) {
+    var request;
     request = {
-      url: this.apiUrl + "/" + namespace + "/" + method,
-      method: "get",
+      url: this.apiUrl + "/" + namespace + "/" + method + "?post",
+      method: "post",
       type: "json",
-      data: getparams
+      data: JSON.stringify(params)
     };
-    console.log("PARAMS " + JSON.stringify(getparams));
-    console.log("PARAMS " + JSON.stringify(params));
     return reqwest(request);
   };
 
-  SnowflakeApi.prototype.apiCall = function(method, namespace, params) {
-    console.log("CALLING " + this.apiUrl);
-    console.log("METHOD " + method);
-    console.log("NAMESPACE " + namespace);
+  SnowflakeEndpoint.prototype.apiCall = function(method, namespace, params) {
     if (this.transport === "ajax") {
       return this.ajaxApiCall(method, namespace, params);
     }
@@ -78,12 +64,8 @@ SnowflakeApi = (function() {
     }
   };
 
-  return SnowflakeApi;
+  return SnowflakeEndpoint;
 
 })();
-
-exports.SnowflakeApi = SnowflakeApi;
-
-exports.status = status;
 
 //# sourceMappingURL=snowflake.js.map

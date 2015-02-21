@@ -1,4 +1,4 @@
-{SnowflakeApi} = require './snowflake.js'
+{SnowflakeEndpoint} = require './snowflake.js'
 
-window.snowflake_ws = new SnowflakeApi "ws://localhost:30003"
-window.snowflake_ajax = new SnowflakeApi "http://localhost:30001", "ajax"
+window.snowflake_ws = new SnowflakeEndpoint "ws://localhost:30003"
+window.snowflake_ajax = new SnowflakeEndpoint "http://localhost:30001"

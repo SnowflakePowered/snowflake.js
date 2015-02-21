@@ -1,9 +1,7 @@
-﻿var SnowflakeApi;
+var SnowflakeEndpoint;
 
-SnowflakeApi = require('./snowflake.js').SnowflakeApi;
+SnowflakeEndpoint = require('./snowflake.js').SnowflakeEndpoint;
 
-window.snowflake_ws = new SnowflakeApi("ws://localhost:30003");
+window.snowflake_ws = new SnowflakeEndpoint("ws://localhost:30003");
 
-window.snowflake_ajax = new SnowflakeApi("http://localhost:30001", "ajax");
-
-//# sourceMappingURL=bootstrap_web.js.map
+window.snowflake_ajax = new SnowflakeEndpoint("http://localhost:30001");
