@@ -1,12 +1,24 @@
-﻿var SnowflakeEndpoint, reqwest;
+var SnowflakeEndpoint, reqwest;
 
 reqwest = require('./node_modules/reqwest/reqwest');
+
+if (!String.prototype.startsWith) {
+  Object.defineProperty(String.prototype, 'startsWith', {
+    enumerable: false,
+    configurable: false,
+    writable: false,
+    value: function(searchString, position) {
+      position = position || 0;
+      return this.lastIndexOf(searchString, position) === position;
+    }
+  });
+}
 
 exports.SnowflakeEndpoint = SnowflakeEndpoint = (function() {
   var handleWebSocketApiCall, websocketcallbacks;
 
-  function SnowflakeEndpoint(apiUrl) {
-    this.apiUrl = apiUrl;
+  function SnowflakeEndpoint(_at_apiUrl) {
+    this.apiUrl = _at_apiUrl;
     if (this.apiUrl.startsWith("ws")) {
       this.transport = "websocket";
     } else {
@@ -67,5 +79,3 @@ exports.SnowflakeEndpoint = SnowflakeEndpoint = (function() {
   return SnowflakeEndpoint;
 
 })();
-
-//# sourceMappingURL=snowflake.js.map
