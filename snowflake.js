@@ -1,4 +1,4 @@
-var SnowflakeEndpoint, reqwest;
+﻿var Snowflake, SnowflakeEndpoint, reqwest;
 
 reqwest = require('./node_modules/reqwest/reqwest');
 
@@ -17,8 +17,8 @@ if (!String.prototype.startsWith) {
 exports.SnowflakeEndpoint = SnowflakeEndpoint = (function() {
   var handleWebSocketApiCall, websocketcallbacks;
 
-  function SnowflakeEndpoint(_at_apiUrl) {
-    this.apiUrl = _at_apiUrl;
+  function SnowflakeEndpoint(apiUrl) {
+    this.apiUrl = apiUrl;
     if (this.apiUrl.startsWith("ws")) {
       this.transport = "websocket";
     } else {
@@ -79,3 +79,84 @@ exports.SnowflakeEndpoint = SnowflakeEndpoint = (function() {
   return SnowflakeEndpoint;
 
 })();
+
+exports.Snowflake = Snowflake = (function() {
+  function Snowflake(apiEndpoint) {
+    this.apiEndpoint = apiEndpoint;
+    this.Games = {};
+    this.Platforms = {};
+    this._apiGame = {
+      __gameGetAllGamesSorted: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("Game.GetAllGamesSorted", "@", {});
+        };
+      })(this),
+      __gameGetAllGames: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("Game.GetAllGames", "@", {});
+        };
+      })(this),
+      __gameGetGamesByPlatform: (function(_this) {
+        return function(platformId) {
+          return _this.apiEndpoint.apiCall("Game.GetGamesByPlatform", "@", {
+            'platform': platformId
+          });
+        };
+      })(this)
+    };
+    this._apiPlatform = {
+      __platformGetPlatforms: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("Platform.GetPlatforms", "@", {});
+        };
+      })(this)
+    };
+  }
+
+  Snowflake.prototype.getGames = function() {
+    return this._apiGame.__gameGetAllGamesSorted().then((function(_this) {
+      return function(response) {
+        _this.Games = response.payload;
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.getGamesByPlatform = function(platform) {
+    return this._apiGame.__gameGetGamesByPlatform(platform).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.getPlatforms = function() {
+    return this._apiPlatform.__platformGetPlatforms().then((function(_this) {
+      return function(response) {
+        _this.Platforms = response.payload;
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.getGamesArray = function() {
+    return Array.prototype.concat.apply([], Object.keys(this.Games).map((function(_this) {
+      return function(index, value) {
+        return _this.Games[index];
+      };
+    })(this)));
+  };
+
+  Snowflake.prototype.getPlatformsArray = function() {
+    return Object.keys(this.Platforms).map((function(_this) {
+      return function(index, value) {
+        return _this.Platforms[index];
+      };
+    })(this));
+  };
+
+  return Snowflake;
+
+})();
+
+//# sourceMappingURL=snowflake.js.map

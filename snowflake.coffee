@@ -21,7 +21,6 @@ class SnowflakeEndpoint
       @socket = new WebSocket(@apiUrl)
       @socket.onmessage = handleWebSocketApiCall
 
-
   websocketcallbacks = {}
   handleWebSocketApiCall = (data) ->
     response = JSON.parse data.data
@@ -54,3 +53,43 @@ class SnowflakeEndpoint
       return @ajaxApiCall method, namespace, params
     if @transport is "websocket"
       return @webSocketApiCall method, namespace, params
+      
+exports.Snowflake =
+class Snowflake
+  constructor: (@apiEndpoint) ->
+    @Games = {}
+    @Platforms = {}
+    
+    @_apiGame =
+      __gameGetAllGamesSorted: =>
+          @apiEndpoint.apiCall "Game.GetAllGamesSorted", "@", {}
+      __gameGetAllGames: =>
+          @apiEndpoint.apiCall "Game.GetAllGames", "@", {}
+      __gameGetGamesByPlatform: (platformId) =>
+          @apiEndpoint.apiCall "Game.GetGamesByPlatform", "@", 
+            'platform' : platformId
+    @_apiPlatform =
+      __platformGetPlatforms: =>
+          @apiEndpoint.apiCall "Platform.GetPlatforms", "@", {}
+          
+  getGames: ->
+      @_apiGame.__gameGetAllGamesSorted()
+      .then (response) =>
+          @Games = response.payload
+          response.payload
+  getGamesByPlatform: (platform) ->
+      @_apiGame.__gameGetGamesByPlatform platform 
+      .then (response) =>
+          response.payload
+  getPlatforms: ->
+      @_apiPlatform.__platformGetPlatforms()
+      .then (response) =>
+          @Platforms = response.payload
+          response.payload
+  getGamesArray: ->
+    Array.prototype.concat.apply [], 
+    Object.keys(@Games).map (index, value) =>
+       @Games[index]
+  getPlatformsArray: ->
+    Object.keys(@Platforms).map (index, value) =>
+        @Platforms[index]
