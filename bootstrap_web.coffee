@@ -1,3 +1,4 @@
-{SnowflakeApi} = require './snowflake'
+{SnowflakeApi} = require './snowflake.js'
 
-window.snowflake = new SnowflakeApi "https://cors-test.appspot.com/test"
+window.snowflake_ws = new SnowflakeApi "ws://localhost:30003"
+window.snowflake_ajax = new SnowflakeApi "http://localhost:30001", "ajax"

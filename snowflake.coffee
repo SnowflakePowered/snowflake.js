@@ -1,11 +1,13 @@
-reqwest = require './node_modules/reqwest/reqwest.js'
+reqwest = require './bower_components/reqwest/reqwest'
 
 class SnowflakeApi
   constructor: (@apiUrl, @transport = "websocket") ->
-    @socket = new WebSocket(@apiUrl)
-    @socket.onmessage = handleWebSocketApiCall
+    
+    if @transport is "websocket"
+      @socket = new WebSocket(@apiUrl)
+      @socket.onmessage = handleWebSocketApiCall
  
- 
+
   websocketcallbacks = {}
   handleWebSocketApiCall = (data) ->
     response = JSON.parse data.data
@@ -25,21 +27,27 @@ class SnowflakeApi
     promise.promise.then (response) ->
         response
 
-  ajaxApiCall: (method, namespace, params) =>
-    console.log "AJAX"
+  ajaxApiCall: (method, namespace, params) ->
+    getparams = ({ name: key, value: params[key]} for key in Object.keys(params))
+    request = 
+        url: @apiUrl + "/" + namespace + "/" + method 
+        method: "get"
+        type: "json"
+        data: getparams
+    console.log "PARAMS " + JSON.stringify getparams
+    console.log "PARAMS " + JSON.stringify params
+
+    reqwest request 
   
   apiCall: (method, namespace, params) ->
     console.log "CALLING " + @apiUrl
     console.log "METHOD " + method
     console.log "NAMESPACE " + namespace
-    console.log "PARAMS " + JSON.stringify params
     if @transport is "ajax"
-        @ajaxApiCall method, namespace, params
+        return @ajaxApiCall method, namespace, params
     if @transport is "websocket"
-        @webSocketApiCall method, namespace, params
+        return @webSocketApiCall method, namespace, params
         
-
-    
     
 exports.SnowflakeApi = SnowflakeApi
 exports.status = status
