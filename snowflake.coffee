@@ -80,19 +80,21 @@ class Snowflake
           @apiEndpoint.apiCall "Game.GetFlagValues", "@", 
             'emulator': emulatorId
             'id': gameId
-            #not implemented yet
+      __gameGetFlagDefaultValues: (emulatorId) =>
+          @apiEndpoint.apiCall "Game.GetFlagDefaultValues", "@",
+            'emulator' : emulatorId
       __gameGetFlagDefaultValue: (emulatorId, flagKey) =>
-          @apiEndpoint.apiCall "Game.GetGameDefaultValue", "@",
+          @apiEndpoint.apiCall "Game.GetFlagDefaultValue", "@",
             'emulator' : emulatorId
             'key' : flagKey
       __gameSetFlagValue: (emulatorId, gameId, flagKey, flagValue) =>
-          @apiEndpoint.apiCall "Game.GetFlagValue", "@",
+          @apiEndpoint.apiCall "Game.SetFlagValue", "@",
             'emulator' : emulatorId
             'id' : gameId
             'key' : flagKey
             'value' : flagValue
       __gameSetFlagDefaultValue: (emulatorId, flagKey, flagValue) =>
-          @apiEndpoint.apiCall "Game.GetGameDefaultValue", "@",
+          @apiEndpoint.apiCall "Game.SetFlagDefaultValue", "@",
             'emulator' : emulatorId
             'key' : flagKey
             'value' : flagValue

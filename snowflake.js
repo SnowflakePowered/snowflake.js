@@ -127,9 +127,16 @@ exports.Snowflake = Snowflake = (function() {
           });
         };
       })(this),
+      __gameGetFlagDefaultValues: (function(_this) {
+        return function(emulatorId) {
+          return _this.apiEndpoint.apiCall("Game.GetFlagDefaultValues", "@", {
+            'emulator': emulatorId
+          });
+        };
+      })(this),
       __gameGetFlagDefaultValue: (function(_this) {
         return function(emulatorId, flagKey) {
-          return _this.apiEndpoint.apiCall("Game.GetGameDefaultValue", "@", {
+          return _this.apiEndpoint.apiCall("Game.GetFlagDefaultValue", "@", {
             'emulator': emulatorId,
             'key': flagKey
           });
@@ -137,7 +144,7 @@ exports.Snowflake = Snowflake = (function() {
       })(this),
       __gameSetFlagValue: (function(_this) {
         return function(emulatorId, gameId, flagKey, flagValue) {
-          return _this.apiEndpoint.apiCall("Game.GetFlagValue", "@", {
+          return _this.apiEndpoint.apiCall("Game.SetFlagValue", "@", {
             'emulator': emulatorId,
             'id': gameId,
             'key': flagKey,
@@ -147,7 +154,7 @@ exports.Snowflake = Snowflake = (function() {
       })(this),
       __gameSetFlagDefaultValue: (function(_this) {
         return function(emulatorId, flagKey, flagValue) {
-          return _this.apiEndpoint.apiCall("Game.GetGameDefaultValue", "@", {
+          return _this.apiEndpoint.apiCall("Game.SetFlagDefaultValue", "@", {
             'emulator': emulatorId,
             'key': flagKey,
             'value': flagValue
@@ -261,17 +268,21 @@ exports.Snowflake = Snowflake = (function() {
   };
 
   Snowflake.prototype.getGamesArray = function() {
-    return Array.prototype.concat.apply([], Object.keys(this.Games).map((function(_this) {
-      return function(index, value) {
-        return _this.Games[index];
+    return this.getGames().then((function(_this) {
+      return function() {
+        return Array.prototype.concat.apply([], Object.keys(_this.Games).map(function(index, value) {
+          return _this.Games[index];
+        }));
       };
-    })(this)));
+    })(this));
   };
 
   Snowflake.prototype.getPlatformsArray = function() {
-    return Object.keys(this.Platforms).map((function(_this) {
-      return function(index, value) {
-        return _this.Platforms[index];
+    return this.getPlatforms().then((function(_this) {
+      return function() {
+        return Object.keys(_this.Platforms).map(function(index, value) {
+          return _this.Platforms[index];
+        });
       };
     })(this));
   };
@@ -279,3 +290,5 @@ exports.Snowflake = Snowflake = (function() {
   return Snowflake;
 
 })();
+
+//# sourceMappingURL=snowflake.js.map
