@@ -71,7 +71,20 @@ class Snowflake
     @_apiPlatform =
       __platformGetPlatforms: =>
           @apiEndpoint.apiCall "Platform.GetPlatforms", "@", {}
-          
+    @_apiSystem = 
+      __systemGetAllPlugins: =>
+          @apiEndpoint.apiCall "System.GetAllPlugins", "@", {}
+      __systemGetEmulatorBridgesForPlatform: (platformId) =>
+          @apiEndpoint.apiCall "System.GetEmulatorBridgesByPlatform", "@", 
+            'platform' : platformId
+      __systemGetEmulatorBridges: =>
+          @apiEndpoint.apiCall "System.GetEmulatorBridges", "@", {}
+      __systemGetScrapers: =>
+          @apiEndpoint.apiCall "System.GetScrapers", "@", {}
+     __systemGetAllAjaxMethods: =>
+          @apiEndpoint.apiCall "System.GetAllAjaxMethods", "@", {}
+     __systemShutdownCore: =>
+          @apiEndpoint.apiCall "System.ShutdownCore", "@", {}
   getGames: ->
       @_apiGame.__gameGetAllGamesSorted()
       .then (response) =>

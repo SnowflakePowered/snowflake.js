@@ -111,6 +111,42 @@ exports.Snowflake = Snowflake = (function() {
         };
       })(this)
     };
+    this._apiSystem = {
+      __systemGetAllPlugins: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("System.GetAllPlugins", "@", {});
+        };
+      })(this),
+      __systemGetEmulatorBridgesForPlatform: (function(_this) {
+        return function(platformId) {
+          return _this.apiEndpoint.apiCall("System.GetEmulatorBridgesByPlatform", "@", {
+            'platform': platformId
+          });
+        };
+      })(this),
+      __systemGetEmulatorBridges: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("System.GetEmulatorBridges", "@", {});
+        };
+      })(this),
+      __systemGetScrapers: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("System.GetScrapers", "@", {});
+        };
+      })(this)
+    };
+    ({
+      __systemGetAllAjaxMethods: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("System.GetAllAjaxMethods", "@", {});
+        };
+      })(this),
+      __systemShutdownCore: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("System.ShutdownCore", "@", {});
+        };
+      })(this)
+    });
   }
 
   Snowflake.prototype.getGames = function() {
