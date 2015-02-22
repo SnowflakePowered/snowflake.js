@@ -46,7 +46,7 @@ class SnowflakeEndpoint
         method: "post"
         type: "json"
         data: JSON.stringify params
-    reqwest request
+    Promise.resolve reqwest request
 
   apiCall: (method, namespace, params) ->
     if @transport is "ajax"
