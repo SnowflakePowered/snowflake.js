@@ -102,6 +102,67 @@ exports.Snowflake = Snowflake = (function() {
             'platform': platformId
           });
         };
+      })(this),
+      __gameGetFlags: (function(_this) {
+        return function(emulatorId) {
+          return _this.apiEndpoint.apiCall("Game.GetFlags", "@", {
+            'emulator': emulatorId
+          });
+        };
+      })(this),
+      __gameGetFlagValue: (function(_this) {
+        return function(emulatorId, gameId, flagKey) {
+          return _this.apiEndpoint.apiCall("Game.GetFlagValue", "@", {
+            'emulator': emulatorId,
+            'id': gameId,
+            'key': flagKey
+          });
+        };
+      })(this),
+      __gameGetFlagDefaultValue: (function(_this) {
+        return function(emulatorId, flagKey) {
+          return _this.apiEndpoint.apiCall("Game.GetGameDefaultValue", "@", {
+            'emulator': emulatorId,
+            'key': flagKey
+          });
+        };
+      })(this),
+      __gameSetFlagValue: (function(_this) {
+        return function(emulatorId, gameId, flagKey, flagValue) {
+          return _this.apiEndpoint.apiCall("Game.GetFlagValue", "@", {
+            'emulator': emulatorId,
+            'id': gameId,
+            'key': flagKey,
+            'value': flagValue
+          });
+        };
+      })(this),
+      __gameSetFlagDefaultValue: (function(_this) {
+        return function(emulatorId, flagKey, flagValue) {
+          return _this.apiEndpoint.apiCall("Game.GetGameDefaultValue", "@", {
+            'emulator': emulatorId,
+            'key': flagKey,
+            'value': flagValue
+          });
+        };
+      })(this),
+      __gameStartGame: (function(_this) {
+        return function(emulatorId, gameId) {
+          return _this.apiEndpoint.apiCall("Game.StartGame", "@", {
+            'emulator': emulatorId,
+            'id': gameId
+          });
+        };
+      })(this),
+      __gameHaltRunningGames: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("Game.HaltRunningGames", "@", {});
+        };
+      })(this),
+      __gameSearchGames: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("Game.SearchGames", "@", {});
+        };
       })(this)
     };
     this._apiPlatform = {

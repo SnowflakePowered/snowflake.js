@@ -66,8 +66,39 @@ class Snowflake
       __gameGetAllGames: =>
           @apiEndpoint.apiCall "Game.GetAllGames", "@", {}
       __gameGetGamesByPlatform: (platformId) =>
-          @apiEndpoint.apiCall "Game.GetGamesByPlatform", "@", 
+          @apiEndpoint.apiCall "Game.GetGamesByPlatform", "@",
             'platform' : platformId
+      __gameGetFlags: (emulatorId) =>
+          @apiEndpoint.apiCall "Game.GetFlags", "@",
+            'emulator' : emulatorId
+      __gameGetFlagValue: (emulatorId, gameId, flagKey) =>
+          @apiEndpoint.apiCall "Game.GetFlagValue", "@",
+            'emulator' : emulatorId
+            'id' : gameId
+            'key' : flagKey
+      __gameGetFlagDefaultValue: (emulatorId, flagKey) =>
+          @apiEndpoint.apiCall "Game.GetGameDefaultValue", "@",
+            'emulator' : emulatorId
+            'key' : flagKey
+      __gameSetFlagValue: (emulatorId, gameId, flagKey, flagValue) =>
+          @apiEndpoint.apiCall "Game.GetFlagValue", "@",
+            'emulator' : emulatorId
+            'id' : gameId
+            'key' : flagKey
+            'value' : flagValue
+      __gameSetFlagDefaultValue: (emulatorId, flagKey, flagValue) =>
+          @apiEndpoint.apiCall "Game.GetGameDefaultValue", "@",
+            'emulator' : emulatorId
+            'key' : flagKey
+            'value' : flagValue
+      __gameStartGame: (emulatorId, gameId) =>
+          @apiEndpoint.apiCall "Game.StartGame", "@",
+            'emulator' : emulatorId
+            'id' : gameId
+      __gameHaltRunningGames: =>
+          @apiEndpoint.apiCall "Game.HaltRunningGames", "@", {}
+      __gameSearchGames: =>
+          @apiEndpoint.apiCall "Game.SearchGames", "@", {}
     @_apiPlatform =
       __platformGetPlatforms: =>
           @apiEndpoint.apiCall "Platform.GetPlatforms", "@", {}
