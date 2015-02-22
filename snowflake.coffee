@@ -144,9 +144,13 @@ class Snowflake
           @Platforms = response.payload
           response.payload
   getGamesArray: ->
-    Array.prototype.concat.apply [], 
-    Object.keys(@Games).map (index, value) =>
-       @Games[index]
+    @getGames()
+    .then =>
+      Array.prototype.concat.apply [], 
+      Object.keys(@Games).map (index, value) =>
+         @Games[index]
   getPlatformsArray: ->
-    Object.keys(@Platforms).map (index, value) =>
-        @Platforms[index]
+    @getPlatforms()
+    .then =>
+      Object.keys(@Platforms).map (index, value) =>
+          @Platforms[index]
