@@ -64,7 +64,7 @@ exports.SnowflakeEndpoint = SnowflakeEndpoint = (function() {
       type: "json",
       data: JSON.stringify(params)
     };
-    return reqwest(request);
+    return Promise.resolve(reqwest(request));
   };
 
   SnowflakeEndpoint.prototype.apiCall = function(method, namespace, params) {
@@ -252,6 +252,54 @@ exports.Snowflake = Snowflake = (function() {
 
   Snowflake.prototype.getGamesByPlatform = function(platform) {
     return this._apiGame.__gameGetGamesByPlatform(platform).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.getEmulatorFlags = function(emulator) {
+    return this._apiGame.__gameGetFlags(emulator).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.getFlagValues = function(emulator, gameId) {
+    return this._apiGame.__gameGetFlagValues(emulator, gameId).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.setFlagValue = function(emulator, gameId, flagName, flagValue) {
+    return this._apiGame.__gameSetFlagValues(emulator, gameId, flagName, flagValue).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.getFlagDefaultValues = function(emulator) {
+    return this._apiGame.__gameGetFlagDefaultValues(emulator).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.setFlagDefaultValue = function(emulator, flagName, flagValue) {
+    return this._apiGame.__gameSetFlagValues(emulator, flagName, flagValue).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.startGame = function(emulator, gameId) {
+    return this._apiGame.__gameStartGame(emulatorId, gameId).then((function(_this) {
       return function(response) {
         return response.payload;
       };

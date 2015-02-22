@@ -140,6 +140,30 @@ class Snowflake
       @_apiGame.__gameGetGamesByPlatform platform 
       .then (response) =>
           response.payload
+  getEmulatorFlags: (emulator) ->
+      @_apiGame.__gameGetFlags emulator
+      .then (response) =>
+          response.payload
+  getFlagValues: (emulator, gameId) ->
+      @_apiGame.__gameGetFlagValues emulator, gameId
+      .then (response) =>
+          response.payload
+  setFlagValue: (emulator, gameId, flagName, flagValue) ->
+      @_apiGame.__gameSetFlagValues emulator, gameId, flagName, flagValue
+      .then (response) =>
+          response.payload
+  getFlagDefaultValues: (emulator) ->
+      @_apiGame.__gameGetFlagDefaultValues emulator
+      .then (response) =>
+          response.payload
+  setFlagDefaultValue: (emulator, flagName, flagValue) ->
+      @_apiGame.__gameSetFlagValues emulator, flagName, flagValue
+      .then (response) =>
+          response.payload
+  startGame: (emulator, gameId) ->
+      @_apiGame.__gameStartGame emulatorId, gameId
+      .then (response) =>
+          response.payload
   getPlatforms: ->
       @_apiPlatform.__platformGetPlatforms()
       .then (response) =>
@@ -156,3 +180,4 @@ class Snowflake
     .then =>
       Object.keys(@Platforms).map (index, value) =>
           @Platforms[index]
+          
