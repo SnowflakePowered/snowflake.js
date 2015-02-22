@@ -76,6 +76,11 @@ class Snowflake
             'emulator' : emulatorId
             'id' : gameId
             'key' : flagKey
+      __gameGetFlagValues: (emulatorId, gameId) =>
+          @apiEndpoint.apiCall "Game.GetFlagValues", "@", 
+            'emulator': emulatorId
+            'id': gameId
+            #not implemented yet
       __gameGetFlagDefaultValue: (emulatorId, flagKey) =>
           @apiEndpoint.apiCall "Game.GetGameDefaultValue", "@",
             'emulator' : emulatorId
@@ -102,6 +107,14 @@ class Snowflake
     @_apiPlatform =
       __platformGetPlatforms: =>
           @apiEndpoint.apiCall "Platform.GetPlatforms", "@", {}
+      __platformGetPreferences: (platformId) =>
+          @apiEndpoint.apiCall "Platform.GetPreferences", "@", 
+            'platform' : platformId
+      __platformSetPreference: (platformId, preferenceName, preferenceValue) =>
+          @apiEndpoint.apiCall "Platform.SetPreference", "@", 
+            'platform' : platformId
+            'preference' : preferenceName
+            'value' : preferenceValue        
     @_apiSystem = 
       __systemGetAllPlugins: =>
           @apiEndpoint.apiCall "System.GetAllPlugins", "@", {}

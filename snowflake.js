@@ -119,6 +119,14 @@ exports.Snowflake = Snowflake = (function() {
           });
         };
       })(this),
+      __gameGetFlagValues: (function(_this) {
+        return function(emulatorId, gameId) {
+          return _this.apiEndpoint.apiCall("Game.GetFlagValues", "@", {
+            'emulator': emulatorId,
+            'id': gameId
+          });
+        };
+      })(this),
       __gameGetFlagDefaultValue: (function(_this) {
         return function(emulatorId, flagKey) {
           return _this.apiEndpoint.apiCall("Game.GetGameDefaultValue", "@", {
@@ -169,6 +177,22 @@ exports.Snowflake = Snowflake = (function() {
       __platformGetPlatforms: (function(_this) {
         return function() {
           return _this.apiEndpoint.apiCall("Platform.GetPlatforms", "@", {});
+        };
+      })(this),
+      __platformGetPreferences: (function(_this) {
+        return function(platformId) {
+          return _this.apiEndpoint.apiCall("Platform.GetPreferences", "@", {
+            'platform': platformId
+          });
+        };
+      })(this),
+      __platformSetPreference: (function(_this) {
+        return function(platformId, preferenceName, preferenceValue) {
+          return _this.apiEndpoint.apiCall("Platform.SetPreference", "@", {
+            'platform': platformId,
+            'preference': preferenceName,
+            'value': preferenceValue
+          });
         };
       })(this)
     };
@@ -255,5 +279,3 @@ exports.Snowflake = Snowflake = (function() {
   return Snowflake;
 
 })();
-
-//# sourceMappingURL=snowflake.js.map
