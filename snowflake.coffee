@@ -24,10 +24,12 @@ class SnowflakeEndpoint
   websocketcallbacks = {}
   handleWebSocketApiCall = (data) ->
     response = JSON.parse data.data
-    request = response.request
-    callback = websocketcallbacks[request.NameSpace + request.MethodName]
-    delete websocketcallbacks[request.NameSpace + request.MethodName]
-    callback.resolve(response)
+    console.log response
+    if response.type is "methodresponse"
+      request = response.request
+      callback = websocketcallbacks[request.NameSpace + request.MethodName]
+      delete websocketcallbacks[request.NameSpace + request.MethodName]
+      callback.resolve(response)
 
   webSocketApiCall: (method, namespace, params) ->
     request =
