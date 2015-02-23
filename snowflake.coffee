@@ -55,14 +55,25 @@ class SnowflakeEndpoint
       return @ajaxApiCall method, namespace, params
     if @transport is "websocket"
       return @webSocketApiCall method, namespace, params
-      
+
 exports.Snowflake =
 class Snowflake
   constructor: (@apiEndpoint) ->
     @Games = {}
     @Platforms = {}
-    
     @_apiGame =
+      __gameGetGameResults: (fileName, platformId) =>
+          @apiEndpoint.apiCall "Game.GetGameResults", "@",
+              'filename' : fileName,
+              'platform' : platformId
+      __gameGetGameInfo: (scrapeResultId, fileName, platformId) =>
+          @apiEndpoint.apiCall "Game.GetGameInfo", "@",
+              'resultid' : scrapeResultId,
+              'filename' : fileName,
+              'platform' : platformId
+      __gameAddGameInfo: (gameInfo) =>
+          @apiEndpoint.apiCall "Game.AddGameInfo", "@",
+              'gameinfo' : gameInfo
       __gameGetAllGamesSorted: =>
           @apiEndpoint.apiCall "Game.GetAllGamesSorted", "@", {}
       __gameGetAllGames: =>
@@ -79,7 +90,7 @@ class Snowflake
             'id' : gameId
             'key' : flagKey
       __gameGetFlagValues: (emulatorId, gameId) =>
-          @apiEndpoint.apiCall "Game.GetFlagValues", "@", 
+          @apiEndpoint.apiCall "Game.GetFlagValues", "@",
             'emulator': emulatorId
             'id': gameId
       __gameGetFlagDefaultValues: (emulatorId) =>
@@ -106,43 +117,53 @@ class Snowflake
             'id' : gameId
       __gameHaltRunningGames: =>
           @apiEndpoint.apiCall "Game.HaltRunningGames", "@", {}
-      __gameSearchGames: =>
-          @apiEndpoint.apiCall "Game.SearchGames", "@", {}
     @_apiPlatform =
       __platformGetPlatforms: =>
           @apiEndpoint.apiCall "Platform.GetPlatforms", "@", {}
       __platformGetPreferences: (platformId) =>
-          @apiEndpoint.apiCall "Platform.GetPreferences", "@", 
+          @apiEndpoint.apiCall "Platform.GetPreferences", "@",
             'platform' : platformId
       __platformSetPreference: (platformId, preferenceName, preferenceValue) =>
-          @apiEndpoint.apiCall "Platform.SetPreference", "@", 
+          @apiEndpoint.apiCall "Platform.SetPreference", "@",
             'platform' : platformId
             'preference' : preferenceName
-            'value' : preferenceValue        
-    @_apiSystem = 
+            'value' : preferenceValue
+    @_apiSystem =
       __systemGetAllPlugins: =>
           @apiEndpoint.apiCall "System.GetAllPlugins", "@", {}
       __systemGetEmulatorBridgesByPlatform: (platformId) =>
-          @apiEndpoint.apiCall "System.GetEmulatorBridgesByPlatform", "@", 
+          @apiEndpoint.apiCall "System.GetEmulatorBridgesByPlatform", "@",
             'platform' : platformId
       __systemGetEmulatorBridges: =>
           @apiEndpoint.apiCall "System.GetEmulatorBridges", "@", {}
       __systemGetScrapers: =>
           @apiEndpoint.apiCall "System.GetScrapers", "@", {}
       __systemGetScrapersByPlatform: (platformId) =>
-          @apiEndpoint.apiCall "System.GetScrapersByPlatform", "@", 
+          @apiEndpoint.apiCall "System.GetScrapersByPlatform", "@",
             'platform' : platformId
-     __systemGetAllAjaxMethods: =>
+      __systemGetAllAjaxMethods: =>
           @apiEndpoint.apiCall "System.GetAllAjaxMethods", "@", {}
-     __systemShutdownCore: =>
+      __systemShutdownCore: =>
           @apiEndpoint.apiCall "System.ShutdownCore", "@", {}
+  getGameResults: (fileName, platformId) ->
+    @_apiGame.__gameGetGameResults fileName, platformId
+    .then (response) =>
+        response.payload
+  getGameInfo: (scrapeResultId, fileName, platformId) ->
+    @_apiGame.__gameGetGameInfo scrapeResultId, fileName, platformId
+    .then (response) =>
+        response.payload
+  addGameInfo: (gameInfo) ->
+    @_apiGame.__gameAddGameInfo gameInfo
+    .then (response) =>
+        response.payload
   getGames: ->
       @_apiGame.__gameGetAllGamesSorted()
       .then (response) =>
           @Games = response.payload
           response.payload
   getGamesByPlatform: (platform) ->
-      @_apiGame.__gameGetGamesByPlatform platform 
+      @_apiGame.__gameGetGamesByPlatform platform
       .then (response) =>
           response.payload
   getEmulatorFlags: (emulator) ->
@@ -175,18 +196,37 @@ class Snowflake
           @Platforms = response.payload
           response.payload
   getAllPlugins: ->
+      @_apiSystem.__systemGetAllPlugins()
+      .then (response) =>
+          response.payload
   getEmulatorBridges: ->
-  getEmulatorBridgesByPlatform: ->
+      @_apiSystem.__systemGetEmulatorBridges()
+      .then (response) =>
+          response.payload
+  getEmulatorBridgesByPlatform: (platform) ->
+      @_apiSystem.__systemGetEmulatorBridgesByPlatform platform
+      .then (response) =>
+          response.payload
   getScrapers: ->
+      @_apiSystem.__systemGetScrapers()
+      .then (response) =>
+          response.payload
   getScrapersByPlatform: ->
+      @_apiSystem.__systemGetScrapersByPlatform platform
+      .then (response) =>
+          response.payload
   getAjaxMethods: ->
-  
+      @_apiSystem.__systemGetAllAjaxMethods()
+      .then (response) =>
+          response.payload
   shutdownCore: ->
-  
+      @_apiSystem.__systemShutdownCore()
+      .catch (err) ->
+          'success': true
   getGamesArray: ->
     @getGames()
     .then =>
-      Array.prototype.concat.apply [], 
+      Array.prototype.concat.apply [],
       Object.keys(@Games).map (index, value) =>
          @Games[index]
   getPlatformsArray: ->
@@ -194,4 +234,3 @@ class Snowflake
     .then =>
       Object.keys(@Platforms).map (index, value) =>
           @Platforms[index]
-          

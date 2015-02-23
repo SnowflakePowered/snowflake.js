@@ -35,10 +35,13 @@ exports.SnowflakeEndpoint = SnowflakeEndpoint = (function() {
   handleWebSocketApiCall = function(data) {
     var callback, request, response;
     response = JSON.parse(data.data);
-    request = response.request;
-    callback = websocketcallbacks[request.NameSpace + request.MethodName];
-    delete websocketcallbacks[request.NameSpace + request.MethodName];
-    return callback.resolve(response);
+    console.log(response);
+    if (response.type === "methodresponse") {
+      request = response.request;
+      callback = websocketcallbacks[request.NameSpace + request.MethodName];
+      delete websocketcallbacks[request.NameSpace + request.MethodName];
+      return callback.resolve(response);
+    }
   };
 
   SnowflakeEndpoint.prototype.webSocketApiCall = function(method, namespace, params) {
@@ -86,6 +89,30 @@ exports.Snowflake = Snowflake = (function() {
     this.Games = {};
     this.Platforms = {};
     this._apiGame = {
+      __gameGetGameResults: (function(_this) {
+        return function(fileName, platformId) {
+          return _this.apiEndpoint.apiCall("Game.GetGameResults", "@", {
+            'filename': fileName,
+            'platform': platformId
+          });
+        };
+      })(this),
+      __gameGetGameInfo: (function(_this) {
+        return function(scrapeResultId, fileName, platformId) {
+          return _this.apiEndpoint.apiCall("Game.GetGameInfo", "@", {
+            'resultid': scrapeResultId,
+            'filename': fileName,
+            'platform': platformId
+          });
+        };
+      })(this),
+      __gameAddGameInfo: (function(_this) {
+        return function(gameInfo) {
+          return _this.apiEndpoint.apiCall("Game.AddGameInfo", "@", {
+            'gameinfo': gameInfo
+          });
+        };
+      })(this),
       __gameGetAllGamesSorted: (function(_this) {
         return function() {
           return _this.apiEndpoint.apiCall("Game.GetAllGamesSorted", "@", {});
@@ -173,11 +200,6 @@ exports.Snowflake = Snowflake = (function() {
         return function() {
           return _this.apiEndpoint.apiCall("Game.HaltRunningGames", "@", {});
         };
-      })(this),
-      __gameSearchGames: (function(_this) {
-        return function() {
-          return _this.apiEndpoint.apiCall("Game.SearchGames", "@", {});
-        };
       })(this)
     };
     this._apiPlatform = {
@@ -232,9 +254,7 @@ exports.Snowflake = Snowflake = (function() {
             'platform': platformId
           });
         };
-      })(this)
-    };
-    ({
+      })(this),
       __systemGetAllAjaxMethods: (function(_this) {
         return function() {
           return _this.apiEndpoint.apiCall("System.GetAllAjaxMethods", "@", {});
@@ -245,8 +265,32 @@ exports.Snowflake = Snowflake = (function() {
           return _this.apiEndpoint.apiCall("System.ShutdownCore", "@", {});
         };
       })(this)
-    });
+    };
   }
+
+  Snowflake.prototype.getGameResults = function(fileName, platformId) {
+    return this._apiGame.__gameGetGameResults(fileName, platformId).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.getGameInfo = function(scrapeResultId, fileName, platformId) {
+    return this._apiGame.__gameGetGameInfo(scrapeResultId, fileName, platformId).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.addGameInfo = function(gameInfo) {
+    return this._apiGame.__gameAddGameInfo(gameInfo).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
 
   Snowflake.prototype.getGames = function() {
     return this._apiGame.__gameGetAllGamesSorted().then((function(_this) {
@@ -322,19 +366,61 @@ exports.Snowflake = Snowflake = (function() {
     })(this));
   };
 
-  Snowflake.prototype.getAllPlugins = function() {};
+  Snowflake.prototype.getAllPlugins = function() {
+    return this._apiSystem.__systemGetAllPlugins().then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
 
-  Snowflake.prototype.getEmulatorBridges = function() {};
+  Snowflake.prototype.getEmulatorBridges = function() {
+    return this._apiSystem.__systemGetEmulatorBridges().then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
 
-  Snowflake.prototype.getEmulatorBridgesByPlatform = function() {};
+  Snowflake.prototype.getEmulatorBridgesByPlatform = function(platform) {
+    return this._apiSystem.__systemGetEmulatorBridgesByPlatform(platform).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
 
-  Snowflake.prototype.getScrapers = function() {};
+  Snowflake.prototype.getScrapers = function() {
+    return this._apiSystem.__systemGetScrapers().then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
 
-  Snowflake.prototype.getScrapersByPlatform = function() {};
+  Snowflake.prototype.getScrapersByPlatform = function() {
+    return this._apiSystem.__systemGetScrapersByPlatform(platform).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
 
-  Snowflake.prototype.getAjaxMethods = function() {};
+  Snowflake.prototype.getAjaxMethods = function() {
+    return this._apiSystem.__systemGetAllAjaxMethods().then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
 
-  Snowflake.prototype.shutdownCore = function() {};
+  Snowflake.prototype.shutdownCore = function() {
+    return this._apiSystem.__systemShutdownCore()["catch"](function(err) {
+      return {
+        'success': true
+      };
+    });
+  };
 
   Snowflake.prototype.getGamesArray = function() {
     return this.getGames().then((function(_this) {
@@ -359,5 +445,3 @@ exports.Snowflake = Snowflake = (function() {
   return Snowflake;
 
 })();
-
-//# sourceMappingURL=snowflake.js.map
