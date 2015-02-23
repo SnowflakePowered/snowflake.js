@@ -209,6 +209,14 @@ class Snowflake
       .then (response) =>
           @Platforms = response.payload
           response.payload
+  getPreferences: (platformId) ->
+      @_apiPlatform.__platformGetPreferences platformId
+      .then (response) =>
+          response.payload
+  setPreference: (platformId, preferenceName, preferenceValue) ->
+      @_apiPlatform.__platformSetPreference platformId preferenceName preferenceValue
+      .then (response) =>
+          response.payload
   getAllPlugins: ->
       @_apiSystem.__systemGetAllPlugins()
       .then (response) =>

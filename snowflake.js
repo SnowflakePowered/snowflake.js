@@ -408,7 +408,7 @@ exports.Snowflake = Snowflake = (function() {
   };
 
   Snowflake.prototype.setPreference = function(platformId, preferenceName, preferenceValue) {
-    return this._apiPlatform.__platformSetPreference(platformId).then((function(_this) {
+    return this._apiPlatform.__platformSetPreference(platformId(preferenceName(preferenceValue))).then((function(_this) {
       return function(response) {
         return response.payload;
       };
