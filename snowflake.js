@@ -88,6 +88,7 @@ exports.Snowflake = Snowflake = (function() {
     this.apiEndpoint = apiEndpoint;
     this.Games = {};
     this.Platforms = {};
+    this.Controllers = {};
     this._apiGame = {
       __gameGetGameResults: (function(_this) {
         return function(fileName, platformId) {
@@ -266,6 +267,38 @@ exports.Snowflake = Snowflake = (function() {
         };
       })(this)
     };
+    this._apiController = {
+      __controllerGetProfiles: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("Controller.GetProfiles", "@", {});
+        };
+      })(this),
+      __controllerSetInput: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("Controller.SetInput", "@", {});
+        };
+      })(this),
+      __controllerGetInputDevices: (function(_this) {
+        return function(controllerProfile) {
+          return _this.apiEndpoint.apiCall("Controller.GetInputDevices", "@", {});
+        };
+      })(this),
+      __controllerSetInputDevice: (function(_this) {
+        return function(controllerProfile, slot) {
+          return _this.apiEndpoint.apiCall("Controller.SetInputDevice", "@", {});
+        };
+      })(this),
+      __controllerGetControllers: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("Controller.GetControllers", "@", {});
+        };
+      })(this),
+      __controllerLoadFileProfile: (function(_this) {
+        return function() {
+          return _this.apiEndpoint.apiCall("Controller.LoadFileProfile", "@", {});
+        };
+      })(this)
+    };
   }
 
   Snowflake.prototype.getGameResults = function(fileName, platformId) {
@@ -366,6 +399,22 @@ exports.Snowflake = Snowflake = (function() {
     })(this));
   };
 
+  Snowflake.prototype.getPreferences = function(platformId) {
+    return this._apiPlatform.__platformGetPreferences(platformId).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.setPreference = function(platformId, preferenceName, preferenceValue) {
+    return this._apiPlatform.__platformSetPreference(platformId).then((function(_this) {
+      return function(response) {
+        return response.payload;
+      };
+    })(this));
+  };
+
   Snowflake.prototype.getAllPlugins = function() {
     return this._apiSystem.__systemGetAllPlugins().then((function(_this) {
       return function(response) {
@@ -422,6 +471,15 @@ exports.Snowflake = Snowflake = (function() {
     });
   };
 
+  Snowflake.prototype.getControllers = function() {
+    return this._apiController.__controllerGetControllers().then((function(_this) {
+      return function(response) {
+        _this.Controllers = response.payload;
+        return response.payload;
+      };
+    })(this));
+  };
+
   Snowflake.prototype.getGamesArray = function() {
     return this.getGames().then((function(_this) {
       return function() {
@@ -434,9 +492,19 @@ exports.Snowflake = Snowflake = (function() {
 
   Snowflake.prototype.getPlatformsArray = function() {
     return this.getPlatforms().then((function(_this) {
-      return function() {
-        return Object.keys(_this.Platforms).map(function(index, value) {
-          return _this.Platforms[index];
+      return function(response) {
+        return Object.keys(response).map(function(index, value) {
+          return response[index];
+        });
+      };
+    })(this));
+  };
+
+  Snowflake.prototype.getControllersArray = function() {
+    return this.getControllers().then((function(_this) {
+      return function(response) {
+        return Object.keys(response).map(function(index, value) {
+          return response[index];
         });
       };
     })(this));

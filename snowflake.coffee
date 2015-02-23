@@ -61,6 +61,7 @@ class Snowflake
   constructor: (@apiEndpoint) ->
     @Games = {}
     @Platforms = {}
+    @Controllers = {}
     @_apiGame =
       __gameGetGameResults: (fileName, platformId) =>
           @apiEndpoint.apiCall "Game.GetGameResults", "@",
@@ -145,6 +146,19 @@ class Snowflake
           @apiEndpoint.apiCall "System.GetAllAjaxMethods", "@", {}
       __systemShutdownCore: =>
           @apiEndpoint.apiCall "System.ShutdownCore", "@", {}
+    @_apiController = 
+      __controllerGetProfiles: =>
+        @apiEndpoint.apiCall "Controller.GetProfiles", "@", {}
+      __controllerSetInput: =>
+        @apiEndpoint.apiCall "Controller.SetInput", "@", {}
+      __controllerGetInputDevices: (controllerProfile) =>
+        @apiEndpoint.apiCall "Controller.GetInputDevices", "@", {}
+      __controllerSetInputDevice: (controllerProfile, slot) =>
+        @apiEndpoint.apiCall "Controller.SetInputDevice", "@", {}
+      __controllerGetControllers: =>
+        @apiEndpoint.apiCall "Controller.GetControllers", "@", {}
+      __controllerLoadFileProfile: =>
+        @apiEndpoint.apiCall "Controller.LoadFileProfile", "@", {}
   getGameResults: (fileName, platformId) ->
     @_apiGame.__gameGetGameResults fileName, platformId
     .then (response) =>
@@ -223,6 +237,11 @@ class Snowflake
       @_apiSystem.__systemShutdownCore()
       .catch (err) ->
           'success': true
+  getControllers: ->
+      @_apiController.__controllerGetControllers()
+      .then (response) =>
+         @Controllers = response.payload
+         response.payload 
   getGamesArray: ->
     @getGames()
     .then =>
@@ -231,6 +250,12 @@ class Snowflake
          @Games[index]
   getPlatformsArray: ->
     @getPlatforms()
-    .then =>
-      Object.keys(@Platforms).map (index, value) =>
-          @Platforms[index]
+    .then (response) =>
+      Object.keys(response).map (index, value) =>
+          response[index]
+  getControllersArray: ->
+    @getControllers()
+    .then (response) =>
+      Object.keys(response).map (index, value) =>
+          response[index]
+      
