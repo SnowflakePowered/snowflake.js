@@ -120,13 +120,16 @@ class Snowflake
     @_apiSystem = 
       __systemGetAllPlugins: =>
           @apiEndpoint.apiCall "System.GetAllPlugins", "@", {}
-      __systemGetEmulatorBridgesForPlatform: (platformId) =>
+      __systemGetEmulatorBridgesByPlatform: (platformId) =>
           @apiEndpoint.apiCall "System.GetEmulatorBridgesByPlatform", "@", 
             'platform' : platformId
       __systemGetEmulatorBridges: =>
           @apiEndpoint.apiCall "System.GetEmulatorBridges", "@", {}
       __systemGetScrapers: =>
           @apiEndpoint.apiCall "System.GetScrapers", "@", {}
+      __systemGetScrapersByPlatform: (platformId) =>
+          @apiEndpoint.apiCall "System.GetScrapersByPlatform", "@", 
+            'platform' : platformId
      __systemGetAllAjaxMethods: =>
           @apiEndpoint.apiCall "System.GetAllAjaxMethods", "@", {}
      __systemShutdownCore: =>
@@ -169,6 +172,15 @@ class Snowflake
       .then (response) =>
           @Platforms = response.payload
           response.payload
+  getAllPlugins: ->
+  getEmulatorBridges: ->
+  getEmulatorBridgesByPlatform: ->
+  getScrapers: ->
+  getScrapersByPlatform: ->
+  getAjaxMethods: ->
+  
+  shutdownCore: ->
+  
   getGamesArray: ->
     @getGames()
     .then =>

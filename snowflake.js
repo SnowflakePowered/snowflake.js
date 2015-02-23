@@ -209,7 +209,7 @@ exports.Snowflake = Snowflake = (function() {
           return _this.apiEndpoint.apiCall("System.GetAllPlugins", "@", {});
         };
       })(this),
-      __systemGetEmulatorBridgesForPlatform: (function(_this) {
+      __systemGetEmulatorBridgesByPlatform: (function(_this) {
         return function(platformId) {
           return _this.apiEndpoint.apiCall("System.GetEmulatorBridgesByPlatform", "@", {
             'platform': platformId
@@ -224,6 +224,13 @@ exports.Snowflake = Snowflake = (function() {
       __systemGetScrapers: (function(_this) {
         return function() {
           return _this.apiEndpoint.apiCall("System.GetScrapers", "@", {});
+        };
+      })(this),
+      __systemGetScrapersByPlatform: (function(_this) {
+        return function(platformId) {
+          return _this.apiEndpoint.apiCall("System.GetScrapersByPlatform", "@", {
+            'platform': platformId
+          });
         };
       })(this)
     };
@@ -314,6 +321,20 @@ exports.Snowflake = Snowflake = (function() {
       };
     })(this));
   };
+
+  Snowflake.prototype.getAllPlugins = function() {};
+
+  Snowflake.prototype.getEmulatorBridges = function() {};
+
+  Snowflake.prototype.getEmulatorBridgesByPlatform = function() {};
+
+  Snowflake.prototype.getScrapers = function() {};
+
+  Snowflake.prototype.getScrapersByPlatform = function() {};
+
+  Snowflake.prototype.getAjaxMethods = function() {};
+
+  Snowflake.prototype.shutdownCore = function() {};
 
   Snowflake.prototype.getGamesArray = function() {
     return this.getGames().then((function(_this) {
