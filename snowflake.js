@@ -482,9 +482,9 @@ exports.Snowflake = Snowflake = (function() {
 
   Snowflake.prototype.getGamesArray = function() {
     return this.getGames().then((function(_this) {
-      return function() {
-        return Array.prototype.concat.apply([], Object.keys(_this.Games).map(function(index, value) {
-          return _this.Games[index];
+      return function(response) {
+        return Array.prototype.concat.apply([], Object.keys(response).map(function(index, value) {
+          return response[index];
         }));
       };
     })(this));
