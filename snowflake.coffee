@@ -161,15 +161,15 @@ class Snowflake
         @apiEndpoint.apiCall "Controller.LoadFileProfile", "@", {}
   getGameResults: (fileName, platformId) ->
     @_apiGame.__gameGetGameResults fileName, platformId
-    .then (response) =>
+    .then (response) ->
       response.payload
   getGameInfo: (scrapeResultId, fileName, platformId) ->
     @_apiGame.__gameGetGameInfo scrapeResultId, fileName, platformId
-    .then (response) =>
+    .then (response) ->
       response.payload
   addGameInfo: (gameInfo) ->
     @_apiGame.__gameAddGameInfo gameInfo
-    .then (response) =>
+    .then (response) ->
       response.payload
   getGames: ->
     @_apiGame.__gameGetAllGamesSorted()
@@ -178,31 +178,31 @@ class Snowflake
       response.payload
   getGamesByPlatform: (platform) ->
     @_apiGame.__gameGetGamesByPlatform platform
-    .then (response) =>
+    .then (response) ->
       response.payload
   getEmulatorFlags: (emulator) ->
     @_apiGame.__gameGetFlags emulator
-    .then (response) =>
+    .then (response) ->
       response.payload
   getFlagValues: (emulator, gameId) ->
     @_apiGame.__gameGetFlagValues emulator, gameId
-    .then (response) =>
+    .then (response) ->
       response.payload
   setFlagValue: (emulator, gameId, flagName, flagValue) ->
     @_apiGame.__gameSetFlagValues emulator, gameId, flagName, flagValue
-    .then (response) =>
+    .then (response) ->
       response.payload
   getFlagDefaultValues: (emulator) ->
     @_apiGame.__gameGetFlagDefaultValues emulator
-    .then (response) =>
+    .then (response) ->
       response.payload
   setFlagDefaultValue: (emulator, flagName, flagValue) ->
     @_apiGame.__gameSetFlagValues emulator, flagName, flagValue
-    .then (response) =>
+    .then (response) ->
       response.payload
   startGame: (emulator, gameId) ->
     @_apiGame.__gameStartGame emulatorId, gameId
-    .then (response) =>
+    .then (response) ->
       response.payload
   getPlatforms: ->
     @_apiPlatform.__platformGetPlatforms()
@@ -211,35 +211,35 @@ class Snowflake
       response.payload
   getPreferences: (platformId) ->
     @_apiPlatform.__platformGetPreferences platformId
-    .then (response) =>
+    .then (response) ->
       response.payload
   setPreference: (platformId, preferenceName, preferenceValue) ->
     @_apiPlatform.__platformSetPreference platformId preferenceName preferenceValue
-    .then (response) =>
+    .then (response) ->
       response.payload
   getAllPlugins: ->
     @_apiSystem.__systemGetAllPlugins()
-    .then (response) =>
+    .then (response) ->
       response.payload
   getEmulatorBridges: ->
     @_apiSystem.__systemGetEmulatorBridges()
-    .then (response) =>
+    .then (response) ->
       response.payload
   getEmulatorBridgesByPlatform: (platform) ->
     @_apiSystem.__systemGetEmulatorBridgesByPlatform platform
-    .then (response) =>
+    .then (response) ->
       response.payload
   getScrapers: ->
     @_apiSystem.__systemGetScrapers()
-    .then (response) =>
+    .then (response) ->
       response.payload
   getScrapersByPlatform: ->
     @_apiSystem.__systemGetScrapersByPlatform platform
-    .then (response) =>
+    .then (response) ->
       response.payload
   getAjaxMethods: ->
     @_apiSystem.__systemGetAllAjaxMethods()
-    .then (response) =>
+    .then (response) ->
       response.payload
   shutdownCore: ->
     @_apiSystem.__systemShutdownCore()
@@ -252,17 +252,17 @@ class Snowflake
       response.payload
   getGamesArray: ->
     @getGames()
-    .then (response) =>
+    .then (response) ->
       Array.prototype.concat.apply [],
       Object.keys(response).map (index, value) ->
         response[index]
   getPlatformsArray: ->
     @getPlatforms()
-    .then (response) =>
+    .then (response) ->
       Object.keys(response).map (index, value) ->
         response[index]
   getControllersArray: ->
     @getControllers()
-    .then (response) =>
+    .then (response) ->
       Object.keys(response).map (index, value) ->
         response[index]

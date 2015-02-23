@@ -302,27 +302,21 @@ exports.Snowflake = Snowflake = (function() {
   }
 
   Snowflake.prototype.getGameResults = function(fileName, platformId) {
-    return this._apiGame.__gameGetGameResults(fileName, platformId).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameGetGameResults(fileName, platformId).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getGameInfo = function(scrapeResultId, fileName, platformId) {
-    return this._apiGame.__gameGetGameInfo(scrapeResultId, fileName, platformId).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameGetGameInfo(scrapeResultId, fileName, platformId).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.addGameInfo = function(gameInfo) {
-    return this._apiGame.__gameAddGameInfo(gameInfo).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameAddGameInfo(gameInfo).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getGames = function() {
@@ -335,59 +329,45 @@ exports.Snowflake = Snowflake = (function() {
   };
 
   Snowflake.prototype.getGamesByPlatform = function(platform) {
-    return this._apiGame.__gameGetGamesByPlatform(platform).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameGetGamesByPlatform(platform).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getEmulatorFlags = function(emulator) {
-    return this._apiGame.__gameGetFlags(emulator).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameGetFlags(emulator).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getFlagValues = function(emulator, gameId) {
-    return this._apiGame.__gameGetFlagValues(emulator, gameId).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameGetFlagValues(emulator, gameId).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.setFlagValue = function(emulator, gameId, flagName, flagValue) {
-    return this._apiGame.__gameSetFlagValues(emulator, gameId, flagName, flagValue).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameSetFlagValues(emulator, gameId, flagName, flagValue).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getFlagDefaultValues = function(emulator) {
-    return this._apiGame.__gameGetFlagDefaultValues(emulator).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameGetFlagDefaultValues(emulator).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.setFlagDefaultValue = function(emulator, flagName, flagValue) {
-    return this._apiGame.__gameSetFlagValues(emulator, flagName, flagValue).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameSetFlagValues(emulator, flagName, flagValue).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.startGame = function(emulator, gameId) {
-    return this._apiGame.__gameStartGame(emulatorId, gameId).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiGame.__gameStartGame(emulatorId, gameId).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getPlatforms = function() {
@@ -400,67 +380,51 @@ exports.Snowflake = Snowflake = (function() {
   };
 
   Snowflake.prototype.getPreferences = function(platformId) {
-    return this._apiPlatform.__platformGetPreferences(platformId).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiPlatform.__platformGetPreferences(platformId).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.setPreference = function(platformId, preferenceName, preferenceValue) {
-    return this._apiPlatform.__platformSetPreference(platformId(preferenceName(preferenceValue))).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiPlatform.__platformSetPreference(platformId(preferenceName(preferenceValue))).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getAllPlugins = function() {
-    return this._apiSystem.__systemGetAllPlugins().then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiSystem.__systemGetAllPlugins().then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getEmulatorBridges = function() {
-    return this._apiSystem.__systemGetEmulatorBridges().then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiSystem.__systemGetEmulatorBridges().then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getEmulatorBridgesByPlatform = function(platform) {
-    return this._apiSystem.__systemGetEmulatorBridgesByPlatform(platform).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiSystem.__systemGetEmulatorBridgesByPlatform(platform).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getScrapers = function() {
-    return this._apiSystem.__systemGetScrapers().then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiSystem.__systemGetScrapers().then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getScrapersByPlatform = function() {
-    return this._apiSystem.__systemGetScrapersByPlatform(platform).then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiSystem.__systemGetScrapersByPlatform(platform).then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.getAjaxMethods = function() {
-    return this._apiSystem.__systemGetAllAjaxMethods().then((function(_this) {
-      return function(response) {
-        return response.payload;
-      };
-    })(this));
+    return this._apiSystem.__systemGetAllAjaxMethods().then(function(response) {
+      return response.payload;
+    });
   };
 
   Snowflake.prototype.shutdownCore = function() {
@@ -481,33 +445,27 @@ exports.Snowflake = Snowflake = (function() {
   };
 
   Snowflake.prototype.getGamesArray = function() {
-    return this.getGames().then((function(_this) {
-      return function(response) {
-        return Array.prototype.concat.apply([], Object.keys(response).map(function(index, value) {
-          return response[index];
-        }));
-      };
-    })(this));
+    return this.getGames().then(function(response) {
+      return Array.prototype.concat.apply([], Object.keys(response).map(function(index, value) {
+        return response[index];
+      }));
+    });
   };
 
   Snowflake.prototype.getPlatformsArray = function() {
-    return this.getPlatforms().then((function(_this) {
-      return function(response) {
-        return Object.keys(response).map(function(index, value) {
-          return response[index];
-        });
-      };
-    })(this));
+    return this.getPlatforms().then(function(response) {
+      return Object.keys(response).map(function(index, value) {
+        return response[index];
+      });
+    });
   };
 
   Snowflake.prototype.getControllersArray = function() {
-    return this.getControllers().then((function(_this) {
-      return function(response) {
-        return Object.keys(response).map(function(index, value) {
-          return response[index];
-        });
-      };
-    })(this));
+    return this.getControllers().then(function(response) {
+      return Object.keys(response).map(function(index, value) {
+        return response[index];
+      });
+    });
   };
 
   return Snowflake;
