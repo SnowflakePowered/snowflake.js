@@ -299,6 +299,7 @@ exports.Snowflake = Snowflake = (function() {
         };
       })(this)
     };
+    document.dispatchEvent(new Event('snowflake-ok'));
   }
 
   Snowflake.prototype.getGameResults = function(fileName, platformId) {
@@ -471,3 +472,5 @@ exports.Snowflake = Snowflake = (function() {
   return Snowflake;
 
 })();
+
+//# sourceMappingURL=snowflake.js.map
