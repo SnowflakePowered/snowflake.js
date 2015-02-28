@@ -159,6 +159,8 @@ class Snowflake
         @apiEndpoint.apiCall "Controller.GetControllers", "@", {}
       __controllerLoadFileProfile: =>
         @apiEndpoint.apiCall "Controller.LoadFileProfile", "@", {}
+     document.dispatchEvent new Event 'snowflake-ok'
+
   getGameResults: (fileName, platformId) ->
     @_apiGame.__gameGetGameResults fileName, platformId
     .then (response) ->
