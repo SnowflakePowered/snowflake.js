@@ -64,9 +64,12 @@ class Snowflake
     @Controllers = {}
     @_apiGame =
       __gameGetGameResults: (fileName, platformId) =>
-        @apiEndpoint.apiCall "Game.GetGameResults", "@",
-              'filename' : fileName,
-              'platform' : platformId
+         #@apiEndpoint.apiCall "Game.GetGameResults", "@", 
+         #     'filename' : fileName,
+         #     'platform' : platformId 
+         @apiEndpoint.apiCall "Game.GetGameResults", "@", 
+         'filename' : fileName,
+         'platform' : platformId 
       __gameGetGameInfo: (scrapeResultId, fileName, platformId) =>
         @apiEndpoint.apiCall "Game.GetGameInfo", "@",
               'resultid' : scrapeResultId,
@@ -74,7 +77,7 @@ class Snowflake
               'platform' : platformId
       __gameAddGameInfo: (gameInfo) =>
         @apiEndpoint.apiCall "Game.AddGameInfo", "@",
-              'gameinfo' : gameInfo
+              'gameinfo' : JSON.stringify gameInfo
       __gameGetAllGamesSorted: =>
         @apiEndpoint.apiCall "Game.GetAllGamesSorted", "@", {}
       __gameGetAllGames: =>
@@ -159,7 +162,11 @@ class Snowflake
         @apiEndpoint.apiCall "Controller.GetControllers", "@", {}
       __controllerLoadFileProfile: =>
         @apiEndpoint.apiCall "Controller.LoadFileProfile", "@", {}
-     document.dispatchEvent new Event 'snowflake-ok'
+     if @apiEndpoint.socket
+        @apiEndpoint.socket.onopen = ->
+            window.dispatchEvent new Event 'snowflake-ok'
+     else
+        window.dispatchEvent new Event 'snowflake-ok'
 
   getGameResults: (fileName, platformId) ->
     @_apiGame.__gameGetGameResults fileName, platformId
@@ -202,7 +209,7 @@ class Snowflake
     @_apiGame.__gameSetFlagValues emulator, flagName, flagValue
     .then (response) ->
       response.payload
-  startGame: (emulator, gameId) ->
+  startGame: (emulatorId, gameId) ->
     @_apiGame.__gameStartGame emulatorId, gameId
     .then (response) ->
       response.payload

@@ -110,7 +110,7 @@ exports.Snowflake = Snowflake = (function() {
       __gameAddGameInfo: (function(_this) {
         return function(gameInfo) {
           return _this.apiEndpoint.apiCall("Game.AddGameInfo", "@", {
-            'gameinfo': gameInfo
+            'gameinfo': JSON.stringify(gameInfo)
           });
         };
       })(this),
@@ -299,7 +299,13 @@ exports.Snowflake = Snowflake = (function() {
         };
       })(this)
     };
-    document.dispatchEvent(new Event('snowflake-ok'));
+    if (this.apiEndpoint.socket) {
+      this.apiEndpoint.socket.onopen = function() {
+        return window.dispatchEvent(new Event('snowflake-ok'));
+      };
+    } else {
+      window.dispatchEvent(new Event('snowflake-ok'));
+    }
   }
 
   Snowflake.prototype.getGameResults = function(fileName, platformId) {
@@ -365,7 +371,7 @@ exports.Snowflake = Snowflake = (function() {
     });
   };
 
-  Snowflake.prototype.startGame = function(emulator, gameId) {
+  Snowflake.prototype.startGame = function(emulatorId, gameId) {
     return this._apiGame.__gameStartGame(emulatorId, gameId).then(function(response) {
       return response.payload;
     });

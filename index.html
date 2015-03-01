@@ -1,11 +1,96 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>My Sample Project</title>
-       <script src="node_modules/mr/bootstrap.js" data-module="bootstrap_web.js"></script>
-       <script src="node_modules/reqwest/reqwest.js"></script>
-	</head>	
-    <body>
-        try opening dev tools.
-    </body>
+  <head>
+    
+    <title>
+      My Sample Project
+    </title>
+    <script src="node_modules/mr/bootstrap.js" data-module="bootstrap_web.js">
+    </script>
+    <link rel="import" href="bower_components/polymer/polymer.html">
+  </head>
+  
+  <body>
+    try opening dev tools.
+    <ul>
+    <template id="gamelist" is="auto-binding" repeat="{{games}}">
+      <li onclick="rungame('{{UUID}}')">
+        <h3>
+          {{Name}}
+        </h3>
+        <em>
+          {{UUID}}
+          {{PlatformId}}
+          {{FileName}}
+        </em>
+      </li>
+    </template>
+    </ul>
+    <ul>
+    <template id="platlist" is="auto-binding" repeat="{{plats}}">
+      <li>
+        <h3>
+          {{Name}}
+        </h3>
+        <em>
+          {{PlatformId}}
+          {{FileName}}
+        </em>
+      </li>
+    </template>
+    </ul>
+    <ul>
+    <template id="contlist" is="auto-binding" repeat="{{conts}}">
+      <li>
+        <h3>
+          {{ControllerID}}
+        </h3>
+        <em>
+        <ul>
+          <template is="auto-binding" repeat="{{key in ControllerInputs | getKeys}}">
+          <li>
+          {{ControllerInputs[key].InputName}}
+          <ul>
+          <li>
+          KeyboardDefault: {{ControllerInputs[key].KeyboardDefault}}
+          </li>
+          <li>
+          GamepadDefault: {{ControllerInputs[key].GamepadDefault}}
+          </li>
+          <li>
+          IsAnalog: {{ControllerInputs[key].IsAnalog}}
+          </li>          </ul>
+          </li>
+          </template>
+        </ul>
+        </em>
+      </li>
+    </template>
+    </ul>
+    <script defer>
+        window.rungame = function(uuid){
+           snowflake_ws.startGame('SnowflakeRA-bSNES-compatibility', uuid);
+        }
+        PolymerExpressions.prototype.getKeys = function(o) {
+          return Object.keys(o);
+        };
+        window.addEventListener('snowflake-ok', function(data){
+        console.log(snowflake_ws);
+
+        snowflake_ws.getGamesArray().then(function(data){
+          document.querySelector('#gamelist').quoteClicked = function(o){
+          alert("hello");
+          };
+          document.querySelector('#gamelist').games = data;
+        });
+        snowflake_ws.getPlatformsArray().then(function(data){
+          document.querySelector('#platlist').plats = data;
+        });
+        snowflake_ws.getControllersArray().then(function(data){
+              
+          document.querySelector('#contlist').conts = data;
+         });    
+        });
+    </script>
+  </body>
 </html>
