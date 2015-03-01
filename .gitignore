@@ -1,4 +1,4 @@
 bower_components/
 node_modules/
-*.min.js
+*.js
 *.js.map
