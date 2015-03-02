@@ -9,5 +9,6 @@ module.exports = (grunt) ->
           files : 
             'snowflake.js' : 'snowflake.coffee'
             'bootstrap_web.js' : 'bootstrap_web.coffee'
+            'bootstrap.js' : 'bootstrap_theme.coffee'
   grunt.loadNpmTasks 'grunt-contrib-coffee'
   grunt.registerTask('default', ['coffee']);

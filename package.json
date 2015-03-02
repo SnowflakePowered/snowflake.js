@@ -1,6 +1,6 @@
 {
   "name": "snowflake.js",
-  "version": "0.1.0",
+  "version": "0.1.4",
   "description": "Snowflake StandardAjax API Bindings",
   "main": "./snowflake.js",
   "scripts": {
@@ -16,18 +16,14 @@
     "Frontend"
   ],
   "author": "Ronny Chan <ronny6993@gmail.com>",
-  "license": "Apache Public License 2.0",
+  "license": "Apache License, Version 2.0",
   "bugs": {
     "url": "https://github.com/SnowflakePowered/snowflake.js/issues"
   },
   "homepage": "https://snowflakepowe.red",
   "dependencies": {
     "mr": "^0.15.7",
-    "reqwest": "^1.1.5"
-  },
-  "devDependencies": {
-    "bower": "^1.3.12",
-    "coffee-script": "^1.9.1",
+    "reqwest": "^1.1.5",
     "grunt": "^0.4.5",
     "grunt-contrib-coffee": "^0.13.0"
   }
