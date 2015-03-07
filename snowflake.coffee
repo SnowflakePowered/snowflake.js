@@ -38,7 +38,12 @@ class SnowflakeEndpoint
         "params": params
     promise = Promise.defer()
     websocketcallbacks[request.namespace + request.method] = promise
-    @socket.send(JSON.stringify request)
+    window.setTimeout =>
+      if @socket.readyState is WebSocket.OPEN
+          @socket.send(JSON.stringify request)
+      else
+        window.setTimeout arguments.callee, 25
+    , 25
     promise.promise.then (response) ->
       response
 
