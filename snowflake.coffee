@@ -28,8 +28,9 @@ class SnowflakeEndpoint
     if response.type is "methodresponse"
       request = response.request
       callback = websocketcallbacks[request.NameSpace + request.MethodName]
-      delete websocketcallbacks[request.NameSpace + request.MethodName]
-      callback.resolve(response)
+      if callback
+        callback.resolve(response)
+        delete websocketcallbacks[request.NameSpace + request.MethodName] 
 
   webSocketApiCall: (method, namespace, params) ->
     request =
