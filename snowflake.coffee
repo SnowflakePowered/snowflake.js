@@ -164,17 +164,21 @@ class Snowflake
           'controller' : controllerId
           'device' : deviceName
       __controllerSetInputConfiguration: (controllerId, deviceName, inputConfig) =>
-        @apiEndpoint.apiCall "Controller.SetInputConfiguration", "@", 
+        @apiEndpoint.apiCall "Controller.SetInputConfiguration  ", "@", 
           'controller' : controllerId
           'device' : deviceName
           'inputconfig': JSON.stringify inputConfig
       __controllerGetInputDevices: =>
         @apiEndpoint.apiCall "Controller.GetInputDevices", "@", {}
-      __controllerSetInputDevice: (platformId, port, deviceName) =>
-        @apiEndpoint.apiCall "Controller.SetInputDevice", "@", 
+      __controllerSetDeviceInPort: (platformId, port, deviceName) =>
+        @apiEndpoint.apiCall "Controller.SetDeviceInPort", "@", 
           'platform' : platformId
           'port' : port
           'device' : deviceName
+      __controllerGetDeviceInPort: (platformId, port) =>
+        @apiEndpoint.apiCall "Controller.GetDeviceInPort", "@", 
+          'platform' : platformId
+          'port' : port
       __controllerGetControllers: =>
         @apiEndpoint.apiCall "Controller.GetControllers", "@", {}
      if @apiEndpoint.socket
