@@ -160,11 +160,11 @@ class Snowflake
         @apiEndpoint.apiCall "Controller.GetProfiles", "@", 
           'controller' : controllerId
       __controllerGetProfileForDevice: (controllerId, deviceName) =>
-        @apiEndpoint.apiCall "Controller.GetProfiles", "@", 
+        @apiEndpoint.apiCall "Controller.GetProfileForDevice", "@", 
           'controller' : controllerId
           'device' : deviceName
       __controllerSetInputConfiguration: (controllerId, deviceName, inputConfig) =>
-        @apiEndpoint.apiCall "Controller.SetInput", "@", 
+        @apiEndpoint.apiCall "Controller.SetInputConfiguration", "@", 
           'controller' : controllerId
           'device' : deviceName
           'inputconfig': JSON.stringify inputConfig
