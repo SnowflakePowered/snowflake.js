@@ -156,18 +156,27 @@ class Snowflake
       __systemShutdownCore: =>
         @apiEndpoint.apiCall "System.ShutdownCore", "@", {}
     @_apiController =
-      __controllerGetProfiles: =>
-        @apiEndpoint.apiCall "Controller.GetProfiles", "@", {}
-      __controllerSetInput: =>
-        @apiEndpoint.apiCall "Controller.SetInput", "@", {}
-      __controllerGetInputDevices: (controllerProfile) =>
+      __controllerGetProfiles: (controllerId) =>
+        @apiEndpoint.apiCall "Controller.GetProfiles", "@", 
+          'controller' : controllerId
+      __controllerGetProfileForDevice: (controllerId, deviceName) =>
+        @apiEndpoint.apiCall "Controller.GetProfiles", "@", 
+          'controller' : controllerId
+          'device' : deviceName
+      __controllerSetInputConfiguration: (controllerId, deviceName, inputConfig) =>
+        @apiEndpoint.apiCall "Controller.SetInput", "@", 
+          'controller' : controllerId
+          'device' : deviceName
+          'inputconfig': JSON.stringify inputConfig
+      __controllerGetInputDevices: =>
         @apiEndpoint.apiCall "Controller.GetInputDevices", "@", {}
-      __controllerSetInputDevice: (controllerProfile, slot) =>
-        @apiEndpoint.apiCall "Controller.SetInputDevice", "@", {}
+      __controllerSetInputDevice: (platformId, port, deviceName) =>
+        @apiEndpoint.apiCall "Controller.SetInputDevice", "@", 
+          'platform' : platformId
+          'port' : port
+          'device' : deviceName
       __controllerGetControllers: =>
         @apiEndpoint.apiCall "Controller.GetControllers", "@", {}
-      __controllerLoadFileProfile: =>
-        @apiEndpoint.apiCall "Controller.LoadFileProfile", "@", {}
      if @apiEndpoint.socket
         @apiEndpoint.socket.onopen = ->
             window.dispatchEvent new Event 'snowflake-ok'
