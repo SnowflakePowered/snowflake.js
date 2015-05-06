@@ -30,7 +30,7 @@ class SnowflakeEndpoint
       callback = websocketcallbacks[request.NameSpace + request.MethodName]
       if callback
         callback.resolve(response)
-        delete websocketcallbacks[request.NameSpace + request.MethodName] 
+        delete websocketcallbacks[request.NameSpace + request.MethodName]
 
   webSocketApiCall: (method, namespace, params) ->
     request =
@@ -70,12 +70,12 @@ class Snowflake
     @Controllers = {}
     @_apiGame =
       __gameGetGameResults: (fileName, platformId) =>
-         #@apiEndpoint.apiCall "Game.GetGameResults", "@", 
+         #@apiEndpoint.apiCall "Game.GetGameResults", "@",
          #     'filename' : fileName,
-         #     'platform' : platformId 
-         @apiEndpoint.apiCall "Game.GetGameResults", "@", 
+         #     'platform' : platformId
+         @apiEndpoint.apiCall "Game.GetGameResults", "@",
          'filename' : fileName,
-         'platform' : platformId 
+         'platform' : platformId
       __gameGetGameInfo: (scrapeResultId, fileName, platformId) =>
         @apiEndpoint.apiCall "Game.GetGameInfo", "@",
               'resultid' : scrapeResultId,
@@ -157,26 +157,26 @@ class Snowflake
         @apiEndpoint.apiCall "System.ShutdownCore", "@", {}
     @_apiController =
       __controllerGetProfiles: (controllerId) =>
-        @apiEndpoint.apiCall "Controller.GetProfiles", "@", 
+        @apiEndpoint.apiCall "Controller.GetProfiles", "@",
           'controller' : controllerId
       __controllerGetProfileForDevice: (controllerId, deviceName) =>
-        @apiEndpoint.apiCall "Controller.GetProfileForDevice", "@", 
+        @apiEndpoint.apiCall "Controller.GetProfileForDevice", "@",
           'controller' : controllerId
           'device' : deviceName
       __controllerSetInputConfiguration: (controllerId, deviceName, inputConfig) =>
-        @apiEndpoint.apiCall "Controller.SetInputConfiguration  ", "@", 
+        @apiEndpoint.apiCall "Controller.SetInputConfiguration  ", "@",
           'controller' : controllerId
           'device' : deviceName
           'inputconfig': JSON.stringify inputConfig
       __controllerGetInputDevices: =>
         @apiEndpoint.apiCall "Controller.GetInputDevices", "@", {}
       __controllerSetDeviceInPort: (platformId, port, deviceName) =>
-        @apiEndpoint.apiCall "Controller.SetDeviceInPort", "@", 
+        @apiEndpoint.apiCall "Controller.SetDeviceInPort", "@",
           'platform' : platformId
           'port' : port
           'device' : deviceName
       __controllerGetDeviceInPort: (platformId, port) =>
-        @apiEndpoint.apiCall "Controller.GetDeviceInPort", "@", 
+        @apiEndpoint.apiCall "Controller.GetDeviceInPort", "@",
           'platform' : platformId
           'port' : port
       __controllerGetControllers: =>
@@ -217,7 +217,7 @@ class Snowflake
     .then (response) ->
       response.payload
   setFlagValue: (emulator, gameId, flagName, flagValue) ->
-    @_apiGame.__gameSetFlagValues emulator, gameId, flagName, flagValue
+    @_apiGame.__gameSetFlagValue emulator, gameId, flagName, flagValue
     .then (response) ->
       response.payload
   getFlagDefaultValues: (emulator) ->
@@ -242,7 +242,7 @@ class Snowflake
     .then (response) ->
       response.payload
   setPreference: (platformId, preferenceName, preferenceValue) ->
-    @_apiPlatform.__platformSetPreference platformId preferenceName preferenceValue
+    @_apiPlatform.__platformSetPreference platformId, preferenceName, preferenceValue
     .then (response) ->
       response.payload
   getAllPlugins: ->
