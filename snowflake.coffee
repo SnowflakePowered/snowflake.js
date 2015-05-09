@@ -70,17 +70,14 @@ class Snowflake
     @Controllers = {}
     @_apiGame =
       __gameGetGameResults: (fileName, platformId) =>
-         #@apiEndpoint.apiCall "Game.GetGameResults", "@",
-         #     'filename' : fileName,
-         #     'platform' : platformId
-         @apiEndpoint.apiCall "Game.GetGameResults", "@",
+        @apiEndpoint.apiCall "Game.GetGameResults", "@",
          'filename' : fileName,
          'platform' : platformId
       __gameGetGameInfo: (scrapeResultId, fileName, platformId) =>
         @apiEndpoint.apiCall "Game.GetGameInfo", "@",
-              'resultid' : scrapeResultId,
-              'filename' : fileName,
-              'platform' : platformId
+         'resultid' : scrapeResultId,
+         'filename' : fileName,
+         'platform' : platformId
       __gameAddGameInfo: (gameInfo) =>
         @apiEndpoint.apiCall "Game.AddGameInfo", "@",
               'gameinfo' : JSON.stringify gameInfo
@@ -116,6 +113,11 @@ class Snowflake
           'id' : gameId
           'key' : flagKey
           'value' : flagValue
+      __gameSetFlagValues: (emulatorId, gameId, flagValues) =>
+        @apiEndpoint.apiCall "Game.SetFlagValues", "@",
+          'emulator' : emulatorId
+          'id' : gameId
+          'values' : JSON.stringify flagValues
       __gameSetFlagDefaultValue: (emulatorId, flagKey, flagValue) =>
         @apiEndpoint.apiCall "Game.SetFlagDefaultValue", "@",
           'emulator' : emulatorId
@@ -218,6 +220,10 @@ class Snowflake
       response.payload
   setFlagValue: (emulator, gameId, flagName, flagValue) ->
     @_apiGame.__gameSetFlagValue emulator, gameId, flagName, flagValue
+    .then (response) ->
+      response.payload
+  setFlagValues: (emulator, gameId, flagValues) ->
+    @_apiGame.__gameSetFlagValues emulator, gameId, flagValues
     .then (response) ->
       response.payload
   getFlagDefaultValues: (emulator) ->
