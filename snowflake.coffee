@@ -41,7 +41,7 @@ class SnowflakeEndpoint
     websocketcallbacks[request.namespace + request.method] = promise
     window.setTimeout =>
       if @socket.readyState is WebSocket.OPEN
-          @socket.send(JSON.stringify request)
+        @socket.send(JSON.stringify request)
       else
         window.setTimeout arguments.callee, 25
     , 25
@@ -184,10 +184,10 @@ class Snowflake
       __controllerGetControllers: =>
         @apiEndpoint.apiCall "Controller.GetControllers", "@", {}
      if @apiEndpoint.socket
-        @apiEndpoint.socket.onopen = ->
-            window.dispatchEvent new Event 'snowflake-ok'
-     else
+      @apiEndpoint.socket.onopen = ->
         window.dispatchEvent new Event 'snowflake-ok'
+     else
+      window.dispatchEvent new Event 'snowflake-ok'
 
   getGameResults: (fileName, platformId) ->
     @_apiGame.__gameGetGameResults fileName, platformId
