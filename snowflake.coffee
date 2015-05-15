@@ -284,6 +284,30 @@ class Snowflake
     .then (response) =>
       @Controllers = response.payload
       response.payload
+  getControllerProfiles: (controllerId) ->
+    @_apiController.__controllerGetProfiles controllerId
+    .then (response) ->
+      response.payload
+  getControllerProfileForDevice: (controllerId, deviceName) ->
+    @_apiController.__controllerGetProfileForDevice controllerId, deviceName
+    .then (response) ->
+      response.payload
+  setInputConfiguration: (controllerId, deviceName, inputConfig) ->
+    @_apiController.__controllerSetInputConfiguration controllerId, deviceName, inputConfig
+    .then (response) ->
+      response.payload
+  getInputDevices: ->
+    @_apiController.__controllerGetInputDevices()
+    .then (response) ->
+      response.payload
+  setDeviceInPort: (platformId, port, deviceName) ->
+    @_apiController.__controllerSetDeviceInPort platformId, port, deviceName
+    .then (response) ->
+      response.payload
+  getDeviceInPort: (platformId, port) ->
+    @_apiController.__controllerGetDeviceInPort platformId, port
+    .then (response) ->
+      response.payload
   getGamesArray: ->
     @getGames()
     .then (response) ->
