@@ -166,7 +166,7 @@ class Snowflake
           'controller' : controllerId
           'device' : deviceName
       __controllerSetInputConfiguration: (controllerId, deviceName, inputConfig) =>
-        @apiEndpoint.apiCall "Controller.SetInputConfiguration  ", "@",
+        @apiEndpoint.apiCall "Controller.SetInputConfiguration", "@",
           'controller' : controllerId
           'device' : deviceName
           'inputconfig': JSON.stringify inputConfig
