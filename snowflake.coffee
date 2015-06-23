@@ -181,6 +181,9 @@ class Snowflake
         @apiEndpoint.apiCall "Controller.GetDeviceInPort", "@",
           'platform' : platformId
           'port' : port
+      __controllerGetDeviceInPorts: (platformId) =>
+        @apiEndpoint.apiCall "Controller.GetDeviceInPorts", "@",
+          'platform' : platformId
       __controllerGetControllers: =>
         @apiEndpoint.apiCall "Controller.GetControllers", "@", {}
      if @apiEndpoint.socket
@@ -306,6 +309,10 @@ class Snowflake
       response.payload
   getDeviceInPort: (platformId, port) ->
     @_apiController.__controllerGetDeviceInPort platformId, port
+    .then (response) ->
+      response.payload
+  getDeviceInPorts: (platformId) ->
+    @_apiController.__controllerGetDeviceInPorts platformId
     .then (response) ->
       response.payload
   getGamesArray: ->
