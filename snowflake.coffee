@@ -170,6 +170,15 @@ class Snowflake
           'controller' : controllerId
           'device' : deviceName
           'inputconfig': JSON.stringify inputConfig
+      __controllerGetGamepadAbstractions: =>
+        @apiEndpoint.apiCall "Controller.GetGamepadAbstractions", "@", {}
+      __controllerGetAbstractionForDevice: (deviceName) =>
+        @apiEndpoint.apiCall "Controller.GetAbstractionForDevice", "@",
+          'device' : deviceName
+      __controllerSetGamepadAbstraction: (deviceName, inputConfig) =>
+        @apiEndpoint.apiCall "Controller.SetGamepadAbstraction", "@",
+          'device' : deviceName
+          'inputconfig': JSON.stringify inputConfig
       __controllerGetInputDevices: =>
         @apiEndpoint.apiCall "Controller.GetInputDevices", "@", {}
       __controllerSetDeviceInPort: (platformId, port, deviceName) =>
@@ -297,6 +306,18 @@ class Snowflake
       response.payload
   setInputConfiguration: (controllerId, deviceName, inputConfig) ->
     @_apiController.__controllerSetInputConfiguration controllerId, deviceName, inputConfig
+    .then (response) ->
+      response.payload
+  getGamepadAbstractions: ->
+    @_apiController.__controllerGetGamepadAbstractions
+    .then (response) ->
+      response.payload
+  getAbstractionForDevice: (deviceName) ->
+    @_apiController.__controllerGetAbstractionForDevice deviceName
+    .then (response) ->
+      response.payload
+  setGamepadAbstraction: (deviceName, inputConfig) ->
+    @_apiController.__controllerSetGamepadAbstraction deviceName, inputConfig
     .then (response) ->
       response.payload
   getInputDevices: ->
