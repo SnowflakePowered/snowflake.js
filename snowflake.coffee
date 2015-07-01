@@ -18,6 +18,11 @@ class SnowflakeEndpoint
     else
       @transport = "ajax"
     if @transport is "websocket"
+      try
+        window.WebSocket = WebSocket = require 'ws'
+      catch error
+        console.log "Unable to use node websocket, reverting to native support"
+
       @socket = new WebSocket(@apiUrl)
       @socket.onmessage = handleWebSocketApiCall
 
