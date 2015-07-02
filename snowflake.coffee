@@ -18,11 +18,9 @@ class SnowflakeEndpoint
     else
       @transport = "ajax"
     if @transport is "websocket"
-      try
-        window.WebSocket = WebSocket = require 'ws'
-      catch error
-        console.log "Unable to use node websocket, reverting to native support"
-
+      if window.process isnt undefined
+        _ws = require 'ws' #If in an electron context, use node websocket because electron native WebSockets are broken
+        window.WebSocket = WebSocket = _ws
       @socket = new WebSocket(@apiUrl)
       @socket.onmessage = handleWebSocketApiCall
 
