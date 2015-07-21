@@ -19,7 +19,7 @@ class SnowflakeEndpoint
       @transport = "ajax"
     if @transport is "websocket"
       if window.process isnt undefined
-        _ws = require 'ws' #If in an electron context, use node websocket because electron native WebSockets are broken
+        _ws = require './node_modules/ws/ws' #If in an electron context, use node websocket because electron native WebSockets are broken
         window.WebSocket = WebSocket = _ws
       @socket = new WebSocket(@apiUrl)
       @socket.onmessage = handleWebSocketApiCall
@@ -312,8 +312,9 @@ class Snowflake
     .then (response) ->
       response.payload
   getGamepadAbstractions: ->
-    @_apiController.__controllerGetGamepadAbstractions
+    @_apiController.__controllerGetGamepadAbstractions()
     .then (response) ->
+      @GamepadAbstractions = response.payload
       response.payload
   getAbstractionForDevice: (deviceName) ->
     @_apiController.__controllerGetAbstractionForDevice deviceName
