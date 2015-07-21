@@ -22,9 +22,10 @@
   },
   "homepage": "https://snowflakepowe.red",
   "dependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.13.0",
     "mr": "^0.15.7",
     "reqwest": "^1.1.5",
-    "grunt": "^0.4.5",
-    "grunt-contrib-coffee": "^0.13.0"
+    "ws": "^0.7.2"
   }
 }
